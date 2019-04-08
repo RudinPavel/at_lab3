@@ -46,6 +46,7 @@ public class Main {
         Map<Integer, Character> myTreeMap = new TreeMap<>();
         Map<Integer, Character> myLinkedHashMap = new LinkedHashMap<>();
 
+
         fillCollection(myVector);
         fillCollection(myStack);
         fillCollection(myArrayList);
@@ -58,6 +59,24 @@ public class Main {
         fillMap(myHashMap);
         fillMap(myLinkedHashMap);
         fillMap(myTreeMap);
+
+        addToCollection(myVector, 10);
+        addToCollection(myStack, 10);
+        addToCollection(myArrayList, 10);
+        addToCollection(myLinkedList, 10);
+        addToCollection(myHashSet, 10);
+        addToCollection(myLinkedHashSet,10);
+        addToCollection(myTreeSet, 10);
+        addToCollection(myArrayDeque, 10);
+        addToCollection(myPriorityQueue, 10);
+
+        deleteFromCollection(myVector, 10);
+        deleteFromCollection(myStack, 10);
+
+
+        //Map(myHashMap);
+        //fillMap(myLinkedHashMap);
+        //fillMap(myTreeMap);
 
         /*
         System.out.println("Stack :");
@@ -97,6 +116,18 @@ public class Main {
         System.out.println("My Tree Map:");
         System.out.println(myTreeMap);
         */
+    }
+
+    public static void addToCollection(Collection<Integer> c, int e){
+        long start_ms = System.currentTimeMillis();
+        c.add(e);
+        System.out.println("Adding spent time  : " + (System.currentTimeMillis() - start_ms) +" ms");
+    }
+
+    public static void deleteFromCollection(Collection<Integer> c, int e){
+        long start_ms = System.currentTimeMillis();
+        c.remove(e);
+        System.out.println("Delete spent time  : " + (System.currentTimeMillis() - start_ms) +" ms");
     }
 
     public static void fillCollection(Collection<Integer> c) {
