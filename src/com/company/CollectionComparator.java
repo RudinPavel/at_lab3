@@ -21,63 +21,184 @@ import java.util.Vector;
 
 public class CollectionComparator {
 
-    public static Random rnd = new Random();
+    // Бенчамарк по работе коллекций
 
-    public static void main(String[] args) {
-        // Бенчамарк по работе коллекций
+    private Vector<Object> myStack = new Stack<>();
+    private Vector<Object> myVector = new Vector<>();
 
-        // Vector v = new Vector(); // почему так можно???
-        // Stack s = new Stack();
+    private List<Object> myArrayList = new ArrayList<>();
+    private List<Object> myLinkedList = new LinkedList<>();
 
-        Vector<Integer> myStack = new Stack<>();
-        Vector<Integer> myVector = new Vector<>();
+    private Set<Object> myTreeSet = new TreeSet<>();
+    private Set<Object> myHashSet = new HashSet<>();
+    private Set<Object> myLinkedHashSet = new LinkedHashSet<>();
 
-        List<Integer> myArrayList = new ArrayList<>();
-        List<Integer> myLinkedList = new LinkedList<>();
+    private Queue<Object> myArrayDeque = new ArrayDeque<>();
+    private Queue<Object> myPriorityQueue = new PriorityQueue<>();
 
-        Set<Integer> myTreeSet = new TreeSet<>();
-        Set<Integer> myHashSet = new HashSet<>();
-        Set<Integer> myLinkedHashSet = new LinkedHashSet<>();
+    private Map<Object, Object> myHashMap = new HashMap<>();
+    private Map<Object, Object> myTreeMap = new TreeMap<>();
+    private Map<Object, Object> myLinkedHashMap = new LinkedHashMap<>();
 
-        Queue<Integer> myArrayDeque = new ArrayDeque<>();
-        Queue<Integer> myPriorityQueue = new PriorityQueue<>();
-
-        Map<Integer, Character> myHashMap = new HashMap<>();
-        Map<Integer, Character> myTreeMap = new TreeMap<>();
-        Map<Integer, Character> myLinkedHashMap = new LinkedHashMap<>();
+    private List<Collection<Object>> myCollections = new ArrayList<>();
+    private List<Map<Object, Object>> myMaps = new ArrayList<>();
 
 
-        fillCollection(myVector);
-        fillCollection(myStack);
-        fillCollection(myArrayList);
-        fillCollection(myLinkedList);
-        fillCollection(myHashSet);
-        fillCollection(myLinkedHashSet);
-        fillCollection(myTreeSet);
-        fillCollection(myArrayDeque);
-        fillCollection(myPriorityQueue);
+    private Random rnd = new Random();
 
-        fillMap(myHashMap);
-        fillMap(myLinkedHashMap);
-        fillMap(myTreeMap);
+    public void createMyCollections(){
 
-        addToCollection(myVector, 10);
-        addToCollection(myStack, 10);
-        addToCollection(myArrayList, 10);
-        addToCollection(myLinkedList, 10);
-        addToCollection(myHashSet, 10);
-        addToCollection(myLinkedHashSet,10);
-        addToCollection(myTreeSet, 10);
-        addToCollection(myArrayDeque, 10);
-        addToCollection(myPriorityQueue, 10);
+        myCollections.add(myStack);
+        myCollections.add(myVector);
 
-        deleteFromCollection(myVector, 10);
-        deleteFromCollection(myStack, 10);
+        myCollections.add(myArrayList);
+        myCollections.add(myLinkedList);
+
+        myCollections.add(myTreeSet);
+        myCollections.add(myLinkedHashSet);
+        myCollections.add(myHashSet);
+
+        myCollections.add(myArrayDeque);
+        myCollections.add(myPriorityQueue);
+    }
+
+    public void createMyMaps(){
+
+        myMaps.add(myHashMap);
+        myMaps.add(myTreeMap);
+        myMaps.add(myLinkedHashMap);
+    }
+
+    public void fillCollections(int n) {
+
+        for (int i = 0; i < myCollections.size(); i++){
+            System.out.print( (i+1) + ". ");
+            fillCollection(myCollections.get(i), rnd.nextInt(1000), n);
+        }
+        System.out.println("-----------------------");
+    }
+
+   /*
+    public static void fillMap(Map<Object, Object> m){
+        String alphabet = "abcdefghijklmnopqrstuvwxyz";
+        for (int i = 0; i < alphabet.length(); i++)
+            m.put(i, alphabet.charAt(i));
+    }
+    */
+
+    public void addToCollections(Object o, int n) {
+
+        for (int i = 0; i < myCollections.size(); i++){
+            System.out.print( (i+1) + ". ");
+           addToCollection(myCollections.get(i), rnd.nextInt(1000), n);
+        }
+        System.out.println("-----------------------");
+    }
+
+    public void deleteFromCollections(Object o) {
+
+        for (int i = 0; i < myCollections.size(); i++){
+            System.out.print( (i+1) + ". ");
+            deleteFromCollection(myCollections.get(i), o);
+        }
+        System.out.println("-----------------------");
+    }
+
+    private static String detectName(Collection<Object> o){
+        String result = "unknown";
+
+        if (o instanceof Stack) return  "stack";
+        if (o instanceof Vector) return "vector";
+
+        if (o instanceof ArrayList) return "array list";
+        if (o instanceof LinkedList) return "linked list";
+
+        if (o instanceof TreeSet) return "tree set";
+        if (o instanceof LinkedHashSet) return "linked hash set";
+        if (o instanceof HashSet) return "hash set";
 
 
-        //Map(myHashMap);
-        //fillMap(myLinkedHashMap);
-        //fillMap(myTreeMap);
+        if (o instanceof ArrayDeque) return "array dequeue";
+        if (o instanceof PriorityQueue) return "priority queue";
+        return result;
+    }
+
+    private void addToCollection(Collection<Object> c, Object o, int n){
+        long start_ms = System.currentTimeMillis();
+        for (int i = 0; i < n; i++)
+            c.add(o);
+        System.out.println("Adding to " + detectName(c) + " spent time  : " + (System.currentTimeMillis() - start_ms) +" ms");
+    }
+
+    private void deleteFromCollection(Collection<Object> c, Object o){
+        long start_ms = System.currentTimeMillis();
+        c.remove(o);
+        System.out.println("Delete from " + detectName(c) + " spent time  : " + (System.currentTimeMillis() - start_ms) +" ms");
+    }
+
+    private void fillCollection(Collection<Object> c, Object o, int n) {
+        long start_ms = System.currentTimeMillis();
+        for (int i = 0; i < n; i++)
+            c.add(o);
+        System.out.println("Filling " + detectName(c) + " spent time  : " + (System.currentTimeMillis() - start_ms) +" ms");
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* неправильный подход, ТИПИЗИРОВАННЫЙ
+    public static void fillList(List<Integer> l){
+        for (int i = 0; i < 1000; i++)
+            l.add(rnd.nextInt(100));
+    }
+
+    public static void fillQueue(Queue<Integer> q){
+        for (int i = 0; i < 1000; i++)
+            q.add(rnd.nextInt(100));
+    }
+
+    public static void fillSet(Set<Integer> s){
+        for (int i = 0; i < 1000; i++)
+            s.add(rnd.nextInt(100));
+    }
+
+    public static void fillMap(List<Integer> l){
+
+    }
+
+    public static void fillVector(Vector<Integer> v){
+        for (int i = 0; i < 1000; i++)
+            v.add(rnd.nextInt(100));
+    }
+
+        fillVector(myVector);
+        fillVector(myStack);
+
+        fillSet(myTreeSet);
+        fillSet(myHashSet);
+        fillSet(myLinkedHashSet);
+
+        fillList(myArrayList);
+        fillList(myLinkedList);
+
+        fillQueue(myArrayDeque);
+        fillQueue(myPriorityQueue);
+ */
+
+//Map(myHashMap);
+//fillMap(myLinkedHashMap);
+//fillMap(myTreeMap);
 
         /*
         System.out.println("Stack :");
@@ -117,68 +238,17 @@ public class CollectionComparator {
         System.out.println("My Tree Map:");
         System.out.println(myTreeMap);
         */
-    }
+        /*
+        fillCollection(myVector);
+        fillCollection(myStack);
 
-    public static void addToCollection(Collection<Integer> c, int e){
-        long start_ms = System.currentTimeMillis();
-        c.add(e);
-        System.out.println("Adding spent time  : " + (System.currentTimeMillis() - start_ms) +" ms");
-    }
+        fillCollection(myArrayList);
+        fillCollection(myLinkedList);
 
-    public static void deleteFromCollection(Collection<Integer> c, int e){
-        long start_ms = System.currentTimeMillis();
-        c.remove(e);
-        System.out.println("Delete spent time  : " + (System.currentTimeMillis() - start_ms) +" ms");
-    }
+        fillCollection(myHashSet);
+        fillCollection(myLinkedHashSet);
+        fillCollection(myTreeSet);
 
-    public static void fillCollection(Collection<Integer> c) {
-        long start_ms = System.currentTimeMillis();
-        for (int i = 0; i < 100000; i++)
-            c.add(rnd.nextInt(100));
-        System.out.println("Filling spent time  : " + (System.currentTimeMillis() - start_ms) +" ms");
-    }
-
-    public static void fillMap(Map<Integer, Character> m){
-        String alphabet = "abcdefghijklmnopqrstuvwxyz";
-        for (int i = 0; i < alphabet.length(); i++)
-            m.put(i, alphabet.charAt(i));
-    }
-}
-/*
-    public static void fillList(List<Integer> l){
-        for (int i = 0; i < 1000; i++)
-            l.add(rnd.nextInt(100));
-    }
-
-    public static void fillQueue(Queue<Integer> q){
-        for (int i = 0; i < 1000; i++)
-            q.add(rnd.nextInt(100));
-    }
-
-    public static void fillSet(Set<Integer> s){
-        for (int i = 0; i < 1000; i++)
-            s.add(rnd.nextInt(100));
-    }
-
-    public static void fillMap(List<Integer> l){
-
-    }
-
-    public static void fillVector(Vector<Integer> v){
-        for (int i = 0; i < 1000; i++)
-            v.add(rnd.nextInt(100));
-    }
-
-        fillVector(myVector);
-        fillVector(myStack);
-
-        fillSet(myTreeSet);
-        fillSet(myHashSet);
-        fillSet(myLinkedHashSet);
-
-        fillList(myArrayList);
-        fillList(myLinkedList);
-
-        fillQueue(myArrayDeque);
-        fillQueue(myPriorityQueue);
- */
+        fillCollection(myArrayDeque);
+        fillCollection(myPriorityQueue);
+         */
