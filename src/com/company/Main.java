@@ -1,7 +1,6 @@
 package com.company;
 
 
-import java.util.Stack;
 
 public class Main {
 
@@ -46,6 +45,46 @@ public class Main {
         }
         finally {
             System.out.println("End with compare");
+        }
+
+        try {
+            MyTree myTree = new MyTree();
+
+            MyNode myNode3 = new MyNode(7, "8", null, null);
+            ;
+            MyNode myNode4 = new MyNode(9, "10", null, null);
+            ;
+
+            MyNode myNode1 = new MyNode(3, "4", myNode3, myNode4);
+            MyNode myNode2 = new MyNode(5, "6", null, null);
+            MyNode myNode0 = new MyNode(1, "2", myNode1, myNode2);
+
+            myTree.setRoot(myNode0);
+            myTree.printTree(myTree.getRoot());
+            System.out.println(myTree.countNodes(myTree.getRoot()) + " nodes in Tree");
+            System.out.println(myTree.countLeaves(myTree.getRoot()) + " leaves in Tree");
+            myTree.visitAll(myTree.getRoot());
+            myTree.printVisitedTree(myTree.getRoot());
+            myTree.removeVisitedFromAll(myTree.getRoot());
+            myTree.printNotVisitedTree(myTree.getRoot());
+
+            /*
+            MyNode mock = new MyNode(-1, "-1", null, null);
+            myTree.addNode(myTree.getRoot(), mock);
+            myTree.addNode(myTree.getRoot(), mock);
+            myTree.addNode(myTree.getRoot(), mock);
+            myTree.addNode(myTree.getRoot(), mock);
+
+            myTree.printTree(myTree.getRoot());
+            */
+            //System.out.println(mt.countLeaves(null));
+            //m.setLeftChild(new MyNode());
+            //System.out.println(m.isLeaf());
+        } catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        finally {
+            System.out.println("End with tree");
         }
     }
 }

@@ -57,21 +57,11 @@ public class MyNode {
         System.out.println(this.key + " " + this.value);
     }
 
-    public static void main(String[] args){
-        MyTree mt = new MyTree();
+    public boolean isVisited() {
+        return isVisited;
+    }
 
-        MyNode mn3 = new MyNode(7, "8", null, null);;
-        MyNode mn4 = new MyNode(9, "10", null, null);;
-
-        MyNode mn1 = new MyNode(3, "4", mn3, mn4);
-        MyNode mn2 = new MyNode(5, "6", null, null);
-        MyNode mn = new MyNode(1,"2", mn1, mn2);
-
-        mt.setRoot(mn);
-        mt.printTree(mt.getRoot());
-        System.out.println(mt.countNodes(mt.getRoot()));
-        System.out.println(mt.countLeaves(mt.getRoot()));
-        //m.setLeftChild(new MyNode());
-        //System.out.println(m.isLeaf());
+    public void setVisited(boolean visited) {
+        isVisited = visited;
     }
 }
